@@ -11,7 +11,6 @@
 
 @section('content')
     <p>hola desde la vista demo</p>
-    <button type="button" class="btn btn-primary">Primary</button>
 @endsection
 @section('foot')
 @endsection

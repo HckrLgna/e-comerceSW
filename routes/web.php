@@ -23,10 +23,6 @@ Route::post('/update', 'App\Http\Controllers\CartController@update')->name('cart
 Route::post('/remove', 'App\Http\Controllers\CartController@remove')->name('cart.remove');
 Route::post('/clear', 'App\Http\Controllers\CartController@clear')->name('cart.clear');
 
-//Auth::routes();
-
-//Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('test', function(){
     return view('theme.backoffice.pages.demo');
 });

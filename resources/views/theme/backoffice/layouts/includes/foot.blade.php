@@ -1,3 +1,2 @@
-<script src="js/bootstrap.js"></script>
-
+@vite(['resources/js/app.js'])
 @yield('foot')
