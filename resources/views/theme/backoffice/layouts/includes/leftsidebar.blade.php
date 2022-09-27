@@ -1,7 +1,7 @@
-<div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+<div class="flex p-5 pt-5 mt-2 bg-white">
     <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
         <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-        <span class="fs-5 fw-semibold">Collapsible</span>
+        <span class="fs-5 fw-semibold">Administracion</span>
     </a>
     <ul class="list-unstyled ps-0">
         <li class="mb-1">

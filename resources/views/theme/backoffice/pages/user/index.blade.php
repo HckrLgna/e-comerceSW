@@ -10,8 +10,7 @@
 @endsection
 
 @section('content')
-    <p>hola desde la vista demo</p>
-
+    <h1>vista de usuarios</h1>
 @endsection
 @section('foot')
 @endsection

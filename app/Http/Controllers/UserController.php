@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
 
-class CartController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+       return view('theme.backoffice.pages.user.index');
     }
 
     /**
@@ -81,17 +80,5 @@ class CartController extends Controller
     public function destroy($id)
     {
         //
-    }
-    public function shop()
-    {
-        $products = Product::all();
-        //dd($products);
-        //return view('frontoffice.show')->withTitle('E-COMMERCE STORE | SHOP')->with(['products' => $products]);
-    }
-
-    public function cart()  {
-        $cartCollection = \Cart::getContent();
-        //dd($cartCollection);
-        //return view('frontoffice.cart')->withTitle('E-COMMERCE STORE | CART')->with(['cartCollection' => $cartCollection]);;
     }
 }

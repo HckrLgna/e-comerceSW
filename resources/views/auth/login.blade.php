@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('theme.frontoffice.layouts.admin')
 
 @section('content')
 <div class="container">

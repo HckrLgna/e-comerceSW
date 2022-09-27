@@ -1,53 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="es">
 <head>
-    <title>@yield('title')</title>
     @include('theme.backoffice.layouts.includes.head')
-
 </head>
 <body>
-    <!-- Start Page Loading -->
-    @include('theme.backoffice.layouts.includes.loader')
-    <!-- End Page Loading -->
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-    <!-- START HEADER -->
-    @include('theme.backoffice.layouts.includes.header')
-    <!-- END HEADER -->
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-    <!-- START MAIN -->
-    <div id="main">
-        <!-- START WRAPPER -->
-        <div class="wrapper">
-            <!-- START LEFT SIDEBAR NAV-->
-        @include('theme.backoffice.layouts.includes.leftsidebar')
-        <!-- END LEFT SIDEBAR NAV-->
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
-            <!-- START CONTENT -->
-            <section id="content">
-            @include('theme.backoffice.layouts.includes.breadcrumb')
-            <!--start container-->
-                <div class="container">
+    <div class="row">
+        @include('theme.backoffice.layouts.includes.header')
+    </div>
+    <div class="row">
+        <div class="container bg-black">
+            <div class="row bg-danger">
+                <div class="col col-3 bg-info">
+                    @include('theme.backoffice.layouts.includes.leftsidebar')
+                </div>
+                <div class="col col-9 bg-gradient ">
+                    @include('theme.backoffice.layouts.includes.breadcrumb')
                     @yield('content')
                 </div>
-                <!--end container-->
-            </section>
-            <!-- END CONTENT -->
-            <!-- START RIGHT SIDEBAR NAV-->
-
-            <!-- END RIGHT SIDEBAR NAV-->
+            </div>
         </div>
-        <!-- END WRAPPER -->
     </div>
-    <!-- END MAIN -->
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-    <!-- START FOOTER -->
-@include('theme.backoffice.layouts.includes.footer')
-<!-- END FOOTER -->
-<!-- ================================================
-Scripts
-================================================ -->
-<!-- jQuery Library -->
-@include('theme.backoffice.layouts.includes.foot')
+    <footer>
+        @include('theme.backoffice.layouts.includes.footer')
+    </footer>
+    @include('theme.backoffice.layouts.includes.foot')
 </body>
 </html>
