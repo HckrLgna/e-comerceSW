@@ -8,12 +8,12 @@
         @include('theme.backoffice.layouts.includes.header')
     </div>
     <div class="row">
-        <div class="container bg-black">
-            <div class="row bg-danger">
-                <div class="col col-3 bg-info">
+        <div class="container">
+            <div class="row">
+                <div class="col col-3">
                     @include('theme.backoffice.layouts.includes.leftsidebar')
                 </div>
-                <div class="col col-9 bg-gradient ">
+                <div class="col pt-3 col-9">
                     @include('theme.backoffice.layouts.includes.breadcrumb')
                     @yield('content')
                 </div>

@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\CartController@shop')->name('shop');
+Auth::routes();
+
+Route::get('/shop', 'App\Http\Controllers\CartController@shop')->name('shop');
 Route::get('/cart', 'App\Http\Controllers\CartController@cart')->name('cart.index');
 Route::post('/add', 'App\Http\Controllers\CartController@add')->name('cart.store');
 Route::post('/update', 'App\Http\Controllers\CartController@update')->name('cart.update');
@@ -21,10 +23,8 @@ Route::post('/remove', 'App\Http\Controllers\CartController@remove')->name('cart
 Route::post('/clear', 'App\Http\Controllers\CartController@clear')->name('cart.clear');
 
 Route::get('test', function(){
-    return view('theme.frontoffice.pages.demo');
+    return view('theme.frontoffice.pages.e-comerce.show');
 });
-
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -32,5 +32,11 @@ Route::group(['middleware'=>['auth'], 'as' => 'backoffice.'], function (){
     Route::resource('role','App\Http\Controllers\RoleController');
     Route::resource('permission','App\Http\Controllers\PermissionController');
     Route::resource('user','App\Http\Controllers\UserController');
+
+    Route::get('admin','App\Http\Controllers\AdminController@show')
+        ->name('admin.show');
 });
 
+Route::get('ecomerce','App\Http\Controllers\EcomerceController@index')->name('ecomerce');
+Route::get('admin','App\Http\Controllers\AdminController@show')
+    ->name('admin.show');

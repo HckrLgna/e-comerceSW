@@ -8,8 +8,8 @@
     @include('theme.frontoffice.layouts.includes.header')
 </div>
 <div class="row">
-    <div class="container bg-black">
-        <div class="row bg-danger">
+    <div class="container">
+        <div class="row">
             @yield('content')
         </div>
     </div>
