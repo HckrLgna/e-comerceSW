@@ -13,7 +13,7 @@ class StoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'=>'required | unique:roles|max:255',
+            'description'=>'required'
+        ];
+    }
+    public function messages(){
+        return ['name.required'=>'el campo de nombre es requerido',
+            'name.unique' => 'el nombre ya esta ocupado',
+            'description.required' => 'la descripcion es requerida'
         ];
     }
 }

@@ -9,16 +9,17 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    /*
     public function __construct()
     {
         $this->middleware('role:' . config('app.admin_role'));
-    }
+    }*/
 
     public function index()
     {
         //$this->authorize('index',Role::class);
         return view('theme.backoffice.pages.role.index',[
-            'roles'=>Role::all(),
+            'roles' => Role::all(),
         ]);
     }
 
@@ -30,7 +31,6 @@ class RoleController extends Controller
     public function create()
     {
         //$this->authorize('create',Role::class);
-
         return view('theme.backoffice.pages.role.create');
     }
 
@@ -43,7 +43,7 @@ class RoleController extends Controller
     public function store(StoreRequest $request, Role $role)
     {
         $role = $role->store($request);
-        return redirect()->route('backoffice.pages.role.show',$role);
+        return redirect()->route('backoffice.role.show',$role);
     }
 
     /**
@@ -84,7 +84,7 @@ class RoleController extends Controller
      */
     public function update(UpdateRequest $request, Role $role)
     {
-        $role->my_update($request);
+        //$role->my_update($request);
         return redirect()->route('backoffice.role.show',$role);
     }
 

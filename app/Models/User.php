@@ -41,4 +41,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    //relaciones
+    public function roles(){
+        return $this->belongsToMany('App\Models\Role')->withTimestamps();
+    }
+    public function fotografo(){
+        return $this->hasOne(Fotografo::class);
+    }
+    //almacenamiento
+    public function has_any_role(array $roles): bool
+    {
+        foreach ($roles as $role){
+            if ($this->has_role($role)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public function has_role($id)
+    {
+        $flag =false;
+        foreach ($this->roles as $role){
+            if ($role->id == $id || $role->slug == $id ){
+                $flag = true;
+            }
+        }
+        return $flag;
+    }
 }

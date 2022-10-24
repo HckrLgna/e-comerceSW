@@ -13,7 +13,7 @@
                 <div class="col col-3">
                     @include('theme.backoffice.layouts.includes.leftsidebar')
                 </div>
-                <div class="col pt-3 col-9">
+                <div class="col pt-4 col-9">
                     @include('theme.backoffice.layouts.includes.breadcrumb')
                     @yield('content')
                 </div>

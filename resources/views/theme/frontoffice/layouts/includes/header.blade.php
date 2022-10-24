@@ -8,9 +8,9 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{{route('home')}}" class="nav-link px-2 text-secondary">Inicio</a></li>
                 <li><a href="{{route('ecomerce')}}" class="nav-link px-2 text-white">Ecomerce</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Precios</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Preguntas</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Acerca de</a></li>
+                <li><a href="{{route('plan.index')}}" class="nav-link px-2 text-white">Planes</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">Crea un evento</a></li>
+                <li><a href="{{route('about')}}" class="nav-link px-2 text-white">Trabaja con nostros</a></li>
             </ul>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">

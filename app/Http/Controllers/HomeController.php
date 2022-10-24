@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fotografo;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -11,11 +13,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    /**public function __construct()
     {
         $this->middleware('auth');
     }
-
+    * /
     /**
      * Show the application dashboard.
      *
@@ -23,6 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('theme.frontoffice.pages.home.home');
+        $user = User::all();
+        return view('theme.frontoffice.pages.landingpage.landingpage',[
+            'users'=> User::all(),
+        ]);
+    }
+    public function about(){
+        return view('theme.frontoffice.pages.about.about');
     }
 }

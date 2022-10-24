@@ -1,7 +1,7 @@
 @extends('theme.frontoffice.layouts.admin')
 
 @section('content')
-    <div class="container" style="margin-top: 80px">
+    <div class="container p-4 m-4" style="margin-top: 80px">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cliente;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::ECOMERCE;
 
     /**
      * Create a new controller instance.
@@ -64,10 +66,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $cliente = new Cliente();
+        $cliente->cantidad_eventos=0;
+        $cliente->profile_photo_path=null;
+        $cliente->id_user = DB::table('users')->max('id');
+        $cliente->save();
+        DB::table('role_user')->insert([
+            'role_id'=>3,
+            'user_id'=>$user->id,
+        ]);
+        return $user;
     }
 }

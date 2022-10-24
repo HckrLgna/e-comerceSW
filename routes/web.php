@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/','App\Http\Controllers\EcomerceController@index');
+
 Auth::routes();
 
 Route::get('/shop', 'App\Http\Controllers\CartController@shop')->name('shop');
@@ -23,7 +25,7 @@ Route::post('/remove', 'App\Http\Controllers\CartController@remove')->name('cart
 Route::post('/clear', 'App\Http\Controllers\CartController@clear')->name('cart.clear');
 
 Route::get('test', function(){
-    return view('theme.frontoffice.pages.e-comerce.show');
+    return view('theme.frontoffice.pages.admin.register');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -40,3 +42,7 @@ Route::group(['middleware'=>['auth'], 'as' => 'backoffice.'], function (){
 Route::get('ecomerce','App\Http\Controllers\EcomerceController@index')->name('ecomerce');
 Route::get('admin','App\Http\Controllers\AdminController@show')
     ->name('admin.show');
+
+Route::get('about','App\Http\Controllers\HomeController@about')->name('about');
+Route::resource('fotografo','App\Http\Controllers\FotografoController');
+Route::resource('plan','App\Http\Controllers\PlanController');

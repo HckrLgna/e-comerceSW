@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plan;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class PlanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,10 @@ class UserController extends Controller
      */
     public function index()
     {
-       return view('theme.frontoffice.pages.user.showProfile');
+        $planes = Plan::all();
+        return view('theme.frontoffice.pages.plan.index',[
+            'planes'=>$planes,
+        ]);
     }
 
     /**
@@ -40,10 +44,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Plan  $plan
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Plan $plan)
     {
         //
     }
@@ -51,10 +55,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Plan  $plan
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Plan $plan)
     {
         //
     }
@@ -63,10 +67,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Plan  $plan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Plan $plan)
     {
         //
     }
@@ -74,11 +78,18 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Plan  $plan
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Plan $plan)
     {
         //
+    }
+    public function pagos($id){
+        if(auth()->user()){
+            return view('checkout',['id'=>$id]);
+        }else{
+            return redirect()->route('log');
+        }
     }
 }

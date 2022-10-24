@@ -4,19 +4,15 @@
     @include('theme.frontoffice.layouts.includes.head')
 </head>
 <body>
-<div class="row">
-    @include('theme.frontoffice.layouts.includes.header')
-</div>
-<div class="row">
-    <div class="container">
-        <div class="row">
-            @yield('content')
-        </div>
-    </div>
-</div>
-<footer>
-    @include('theme.backoffice.layouts.includes.footer')
-</footer>
-@include('theme.backoffice.layouts.includes.foot')
+    <header>
+        @include('theme.frontoffice.layouts.includes.header')
+    </header>
+    <main>
+        @yield('content')
+    </main>
+    <footer class="bg-warning">
+        @include('theme.backoffice.layouts.includes.footer')
+    </footer>
+    @include('theme.backoffice.layouts.includes.foot')
 </body>
 </html>
