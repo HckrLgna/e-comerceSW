@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/','App\Http\Controllers\EcomerceController@index');
 
 Auth::routes();
+;
+Route::post('/loggin',[App\Http\Controllers\LoginController::class, 'login'])
+    ->name('loggin');
 
 Route::get('/shop', 'App\Http\Controllers\CartController@shop')->name('shop');
 Route::get('/cart', 'App\Http\Controllers\CartController@cart')->name('cart.index');
@@ -40,9 +43,26 @@ Route::group(['middleware'=>['auth'], 'as' => 'backoffice.'], function (){
 });
 
 Route::get('ecomerce','App\Http\Controllers\EcomerceController@index')->name('ecomerce');
+Route::post('ecomerce/mostrar','App\Http\Controllers\EcomerceController@mostrar')->name('ecomerce.mostrar');
+Route::get('ecomerce/{fotografia}/comprar','App\Http\Controllers\EcomerceController@guardarFotografia')->name('ecomerce.comprar');
 Route::get('admin','App\Http\Controllers\AdminController@show')
     ->name('admin.show');
 
 Route::get('about','App\Http\Controllers\HomeController@about')->name('about');
 Route::resource('fotografo','App\Http\Controllers\FotografoController');
 Route::resource('plan','App\Http\Controllers\PlanController');
+Route::resource('evento','App\Http\Controllers\EventoController');
+Route::resource('cliente','App\Http\Controllers\ClienteController');
+
+Route::get('evento/{evento}/participantes','App\Http\Controllers\EventoController@participantes')->name('evento.participantes');
+Route::get('evento/{evento}/album','App\Http\Controllers\EventoController@album')->name('evento.album');
+
+Route::post('fotografia/{evento}/store','App\Http\Controllers\FotografiaController@store')->name('fotografia.store');
+
+
+Route::get('suscripcion','App\Http\Controllers\SuscripcionController@index')->name('suscripcion.index');
+Route::post('suscripcion','App\Http\Controllers\SuscripcionController@store')->name('suscripcion.store');
+Route::get('/check-out/{id}', [\App\Http\Controllers\PlanController::class, 'pagos'])
+    ->name('check-out',);
+Route::post('/checkout/{id}',[\App\Http\Controllers\SuscripcionController::class, 'store'])
+    ->name('checkout-input');

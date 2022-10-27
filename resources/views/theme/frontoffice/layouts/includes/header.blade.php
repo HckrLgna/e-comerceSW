@@ -8,8 +8,8 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{{route('home')}}" class="nav-link px-2 text-secondary">Inicio</a></li>
                 <li><a href="{{route('ecomerce')}}" class="nav-link px-2 text-white">Ecomerce</a></li>
-                <li><a href="{{route('plan.index')}}" class="nav-link px-2 text-white">Planes</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Crea un evento</a></li>
+                <li><a href="{{route('suscripcion.index')}}" class="nav-link px-2 text-white">Planes</a></li>
+                <li><a href="{{route('evento.create')}}" class="nav-link px-2 text-white">Crea un evento</a></li>
                 <li><a href="{{route('about')}}" class="nav-link px-2 text-white">Trabaja con nostros</a></li>
             </ul>
 
@@ -18,10 +18,18 @@
             </form>
 
             <div class="text-end">
+
                 @if(!auth()->user())
                     <a href="{{route('login')}}"> <button type="button" class="btn btn-outline-light me-2">Login</button></a>
                     <a href="{{route('register')}}"> <button type="button" class="btn btn-warning">Sign-up </button></a>
                 @else
+                    @if(auth()->user()->roles[0]->name == "Organizador")
+                        <a href="{{route('evento.index')}}"> <button type="button" class="btn btn-outline-light me-2">Perfil</button></a>
+                    @elseif(auth()->user()->roles[0]->name == "Fotografo")
+                        <a href="{{route('fotografo.index')}}"> <button type="button" class="btn btn-outline-light me-2">Perfil</button></a>
+                        @else
+                        <a href="{{route('cliente.index')}}"> <button type="button" class="btn btn-outline-light me-2">Perfil</button></a>
+                    @endif
                     <form method="POST" action="{{route ('logout')}}">
                         @csrf
                         <button type="submit" class="btn btn-warning">logout </button>

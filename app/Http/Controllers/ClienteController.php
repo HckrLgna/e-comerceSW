@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Fotografia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
 {
@@ -14,7 +16,13 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+        return view('theme.frontoffice.pages.user.cliente.show',[
+            'cliente'=>$user->cliente,
+            'fotografias' => $user->cliente->fotografias,
+            'eventos'=>$user->cliente->eventos
+
+        ]);
     }
 
     /**
@@ -46,7 +54,7 @@ class ClienteController extends Controller
      */
     public function show(Cliente $cliente)
     {
-        //
+
     }
 
     /**
@@ -82,4 +90,5 @@ class ClienteController extends Controller
     {
         //
     }
+
 }

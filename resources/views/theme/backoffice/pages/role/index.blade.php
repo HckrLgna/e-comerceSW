@@ -33,7 +33,6 @@
                 <tbody>
                 @foreach($roles as $role)
                     <tr>
-
                         <th scope="row">{{$role->id}}</th>
                         <td><a href="{{route('backoffice.role.show',$role->id)}}">{{$role->name}}</a> </td>
                         <td>{{$role->description}}</td>

@@ -13,4 +13,7 @@ class Fotografo extends Model
     public function user(){
         return $this->belongsTo('App\Models\User');
     }
+    public function eventos(){
+        return $this->hasMany(Evento::class); //revisar esta relacion
+    }
 }

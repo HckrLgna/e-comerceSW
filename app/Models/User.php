@@ -48,6 +48,15 @@ class User extends Authenticatable
     public function fotografo(){
         return $this->hasOne(Fotografo::class);
     }
+    public function cliente(){
+        return $this->hasOne(Cliente::class);
+    }
+    public function organizador(){
+        return $this->hasOne(Organizador::class);
+    }
+    public function suscripcion(){
+        return $this->hasOne(Suscripcion::class);
+    }
     //almacenamiento
     public function has_any_role(array $roles): bool
     {

@@ -17,7 +17,11 @@ class FotografoController extends Controller
      */
     public function index()
     {
-        //
+        $fotografo = Auth::user()->fotografo;
+        return view('theme.frontoffice.pages.user.fotografo.show',[
+            'fotografo' => $fotografo,
+            'eventos' => $fotografo->eventos,
+        ]);
     }
 
     /**
@@ -79,6 +83,8 @@ class FotografoController extends Controller
     {
         return view('theme.frontoffice.pages.user.fotografo.show',[
             'fotografo'=>$fotografo,
+            'eventos' => $fotografo->eventos,
+
         ]);
     }
 

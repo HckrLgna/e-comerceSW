@@ -87,9 +87,9 @@ class PlanController extends Controller
     }
     public function pagos($id){
         if(auth()->user()){
-            return view('checkout',['id'=>$id]);
+            return view('theme.frontoffice.pages.e-comerce.pago.show',['id'=>$id]);
         }else{
-            return redirect()->route('log');
+            return redirect()->route('login');
         }
     }
 }

@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->integer('cantidad_eventos')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
-            $table->unsignedBigInteger('id_user');
-            $table->timestamps();
-            $table->foreign('id_user')->on('users')->references('id')
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->on('users')->references('id')
                 ->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

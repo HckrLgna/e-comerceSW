@@ -31,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::ECOMERCE;
+    protected $redirectTo = RouteServiceProvider::PROFILEC;
 
     /**
      * Create a new controller instance.
@@ -75,10 +75,10 @@ class RegisterController extends Controller
         $cliente = new Cliente();
         $cliente->cantidad_eventos=0;
         $cliente->profile_photo_path=null;
-        $cliente->id_user = DB::table('users')->max('id');
+        $cliente->user_id = DB::table('users')->max('id');
         $cliente->save();
         DB::table('role_user')->insert([
-            'role_id'=>3,
+            'role_id'=>4,
             'user_id'=>$user->id,
         ]);
         return $user;

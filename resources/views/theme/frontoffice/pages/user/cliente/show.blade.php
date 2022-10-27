@@ -16,18 +16,18 @@
                                      style="width: 150px; z-index: 1">
                                 <button type="button" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
                                         style="z-index: 1;">
-                                    Edit profile
+                                    Subir foto
                                 </button>
                             </div>
                             <div class="ms-3" style="margin-top: 130px;">
-                                <h5>{{$fotografo->user->name}}</h5>
-                                <p>{{$fotografo->ciudad}}</p>
+                                <h5>{{$cliente->user->name}}</h5>
+                                <p>{{$cliente->user->email}}</p>
                             </div>
                         </div>
                         <div class="p-4 text-black" style="background-color: #f8f9fa;">
                             <div class="d-flex justify-content-end text-center py-1">
                                 <div>
-                                    <p class="mb-1 h5">253</p>
+                                    <p class="mb-1 h5">{{count($fotografias)}}</p>
                                     <p class="small text-muted mb-0">Fotografias</p>
                                 </div>
                                 <div class="px-3">
@@ -35,48 +35,35 @@
                                     <p class="small text-muted mb-0">Eventos asistidos</p>
                                 </div>
                                 <div>
-                                    <p class="mb-1 h5">478</p>
-                                    <p class="small text-muted mb-0">Reconocimientos</p>
+                                    <p class="mb-1 h5">0</p>
+                                    <p class="small text-muted mb-0">Eventos Organizados</p>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body p-4 text-black">
                             <div class="mb-5">
-                                <p class="lead fw-normal mb-1">About</p>
+                                <p class="lead fw-normal mb-1">Acerca de</p>
                                 <div class="p-4" style="background-color: #f8f9fa;">
-                                    <p class="font-italic mb-1">Diseñador Web</p>
-                                    <p class="font-italic mb-1">Vive en La Paz</p>
-                                    <p class="font-italic mb-0">Fotografo</p>
+                                    <p class="font-italic mb-1">Desarrollador web</p>
+                                    <p class="font-italic mb-1">Vive en Santa Cruz</p>
+                                    <p class="font-italic mb-0">Animador</p>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <p class="lead fw-normal mb-0">Lista de eventos</p>
-                                <div class="container">
-                                    <div class="row pt-2">
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Nombre del evento</th>
-                                                <th scope="col">Lugar</th>
-                                                <th scope="col">Fecha</th>
-                                                <th scope="col">Administrar</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($eventos as $evento)
-                                                <tr>
-                                                    <th scope="row">{{$evento->id}}</th>
-                                                    <td>{{$evento->nombre}}</td>
-                                                    <td>{{$evento->fecha}}</td>
-                                                    <td>{{$evento->lugar}}</td>
-                                                    <td><a href="{{route('evento.album',$evento)}}">Ver</a></td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                <p class="lead fw-normal mb-0">Album de fotos</p>
+                                <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
+                            </div>
+                            <div class="row g-2">
+                                @foreach($fotografias as $fotografia)
+                                <div class="col mb-2">
+                                    <img src="{{$fotografia->path_img}}"
+                                         alt="image 1" class="w-100 rounded-3">
                                 </div>
+                                <div class="col mb-2">
+                                    <img src="{{$fotografia->path_img}}"
+                                         alt="image 1" class="w-100 rounded-3">
+                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

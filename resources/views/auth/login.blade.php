@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Inicia secion') }}</div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('loggin') }}">
                         @csrf
 
                         <div class="row mb-3">

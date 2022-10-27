@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Evento;
+use App\Models\Fotografia;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EcomerceController extends Controller
 {
@@ -14,8 +17,10 @@ class EcomerceController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
         return view('theme.frontoffice.pages.e-comerce.show',[
-            'products' => Product::all(),
+            'fotografias' => Fotografia::all(),
+            'eventos'=>$user->cliente->eventos
         ]);
     }
 
@@ -83,5 +88,20 @@ class EcomerceController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function mostrar(Request $request){
+        $user = auth()->user();
+        $evento = Evento::all()->find($request->input('evento_id'));
+        return view('theme.frontoffice.pages.e-comerce.show',[
+            'fotografias' => $evento->fotografias,
+            'eventos'=>$user->cliente->eventos
+        ]);
+    }
+    public function guardarFotografia(Fotografia $fotografia){
+        DB::table('cliente_fotografia')->insert([
+            'cliente_id'=> auth()->user()->cliente->id,
+            'fotografia_id'=>$fotografia->id,
+        ]);
+        return redirect()->route('cliente.index');
     }
 }
