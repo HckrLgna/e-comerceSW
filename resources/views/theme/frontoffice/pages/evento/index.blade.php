@@ -8,7 +8,7 @@
         <div class="row">
             <nav class="col-md-4 col-lg-3 d-md-block bg-light sidebar collapse">
                 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <a href="{{route('evento.index')}}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                         <img class="d-block mx-auto mb-4" src="{{asset('img/logo.png')}}" alt="logo" width="172" >
                     </a>
                     <hr>
@@ -30,7 +30,16 @@
                 </div>
             </nav>
             <main class="col-md-8 ms-sm-auto col-lg-9 px-md-4">
-                    <h1>aqui ira el main</h1>
+                    <div class="container p-5">
+                        <div class="row">
+                            <h1>Evento: {{$evento->nombre}}</h1>
+                            <h2>fecha del evento: {{$evento->fecha}}</h2>
+                        </div>
+                        <div class="row">
+                            <img src="{{asset('qrcodes/evento'.$evento->id.'.svg')}}" alt="imagen del codigo qr" width="350" height="350">
+                        </div>
+
+                    </div>
             </main>
         </div>
 

@@ -6,8 +6,10 @@
 @section('content')
    <div class="container p-5">
        <div class="row">
-           <div class="col col-6 bg-dark"></div>
-           <div class="col col-6 bg-warning">
+           <div class="col col-6 justify-content-center ">
+               <img src="{{asset('img/fotografo.jpeg')}}" alt="un fotografo" width="450" height="650">
+           </div>
+           <div class="col col-6 ">
                <form class="row g-3" method="post" action="{{route('fotografo.store')}}">
                    @csrf
                    <div class="col-md-4">
@@ -39,13 +41,13 @@
                        <input type="text" class="form-control" id="experiencia" name="experiencia" placeholder="años">
                    </div>
                    <div class="col-md-6">
-                       <div class="form-check">
+                       <div class="">
                            <label for="email" class="form-label">Correo electronico</label>
                            <input type="email" class="form-control" id="email" aria-describedby="inputGroupPrepend" name="email" required>
                        </div>
                    </div>
                    <div class="col-md-6">
-                       <div class="form-check">
+                       <div class="">
                            <label for="password" class="form-label">Contraseña</label>
                            <input type="password" class="form-control" id="password" aria-describedby="inputGroupPrepend" name="password" required>
                        </div>

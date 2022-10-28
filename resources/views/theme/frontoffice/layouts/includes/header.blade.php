@@ -10,7 +10,7 @@
                 <li><a href="{{route('ecomerce')}}" class="nav-link px-2 text-white">Ecomerce</a></li>
                 <li><a href="{{route('suscripcion.index')}}" class="nav-link px-2 text-white">Planes</a></li>
                 <li><a href="{{route('evento.create')}}" class="nav-link px-2 text-white">Crea un evento</a></li>
-                <li><a href="{{route('about')}}" class="nav-link px-2 text-white">Trabaja con nostros</a></li>
+                <li><a href="{{route('fotografo.create')}}" class="nav-link px-2 text-white">Trabaja con nostros</a></li>
             </ul>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">

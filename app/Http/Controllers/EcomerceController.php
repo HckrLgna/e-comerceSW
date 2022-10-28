@@ -18,10 +18,17 @@ class EcomerceController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('theme.frontoffice.pages.e-comerce.show',[
-            'fotografias' => Fotografia::all(),
-            'eventos'=>$user->cliente->eventos
-        ]);
+        if (auth()->user() && auth()->user()->cliente){
+            return view('theme.frontoffice.pages.e-comerce.show',[
+                'fotografias' => Fotografia::all(),
+                'eventos'=>$user->cliente->eventos
+            ]);
+        }else{
+            return view('theme.frontoffice.pages.e-comerce.show',[
+                'fotografias' => Fotografia::all(),
+                'eventos'=>Evento::all()
+            ]);
+        }
     }
 
     /**
@@ -40,10 +47,6 @@ class EcomerceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -98,10 +101,14 @@ class EcomerceController extends Controller
         ]);
     }
     public function guardarFotografia(Fotografia $fotografia){
-        DB::table('cliente_fotografia')->insert([
-            'cliente_id'=> auth()->user()->cliente->id,
-            'fotografia_id'=>$fotografia->id,
-        ]);
-        return redirect()->route('cliente.index');
+        if (auth()->user() && auth()->user()->cliente){
+            DB::table('cliente_fotografia')->insert([
+                'cliente_id'=> auth()->user()->cliente->id,
+                'fotografia_id'=>$fotografia->id,
+            ]);
+            return redirect()->route('cliente.index');
+        }else{
+            return redirect()->route('loggin');
+        }
     }
 }

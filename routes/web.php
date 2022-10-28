@@ -15,23 +15,35 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/','App\Http\Controllers\EcomerceController@index');
 
-Auth::routes();
-;
 Route::post('/loggin',[App\Http\Controllers\LoginController::class, 'login'])
     ->name('loggin');
-
-Route::get('/shop', 'App\Http\Controllers\CartController@shop')->name('shop');
-Route::get('/cart', 'App\Http\Controllers\CartController@cart')->name('cart.index');
-Route::post('/add', 'App\Http\Controllers\CartController@add')->name('cart.store');
-Route::post('/update', 'App\Http\Controllers\CartController@update')->name('cart.update');
-Route::post('/remove', 'App\Http\Controllers\CartController@remove')->name('cart.remove');
-Route::post('/clear', 'App\Http\Controllers\CartController@clear')->name('cart.clear');
-
-Route::get('test', function(){
-    return view('theme.frontoffice.pages.admin.register');
-});
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes(['verify'=>true]);
+    Route::group(['middleware' => ['auth']],function (){
+        Route::post('ecomerce/mostrar','App\Http\Controllers\EcomerceController@mostrar')->name('ecomerce.mostrar');
+        Route::post('ecomerce/{fotografia}/comprar','App\Http\Controllers\EcomerceController@guardarFotografia')->name('ecomerce.comprar');
+        Route::get('admin','App\Http\Controllers\AdminController@show')
+            ->name('admin.show');
+
+        Route::resource('fotografo','App\Http\Controllers\FotografoController');
+        Route::post('fotografia/{evento}/store','App\Http\Controllers\FotografiaController@store')->name('fotografia.store');
+        Route::resource('cliente','App\Http\Controllers\ClienteController');
+
+        Route::resource('plan','App\Http\Controllers\PlanController');
+
+        Route::resource('evento','App\Http\Controllers\EventoController');
+
+        Route::get('evento/{evento}/participantes','App\Http\Controllers\EventoController@participantes')->name('evento.participantes');
+        Route::get('evento/{evento}/album','App\Http\Controllers\EventoController@album')->name('evento.album');
+        Route::get('evento/{evento}/invitacion','App\Http\Controllers\EventoController@indexInvitacion')->name('evento.index.invitacion');
+        Route::get('registrar/{evento}/usuario','App\Http\Controllers\EventoController@registrarUsuario')->name('registrarusuario');
+
+        Route::post('suscripcion','App\Http\Controllers\SuscripcionController@store')->name('suscripcion.store');
+        Route::get('/check-out/{id}', [\App\Http\Controllers\PlanController::class, 'pagos'])
+            ->name('check-out',);
+        Route::post('/checkout/{id}',[\App\Http\Controllers\SuscripcionController::class, 'store'])
+            ->name('checkout-input');
+    });
 
 Route::group(['middleware'=>['auth'], 'as' => 'backoffice.'], function (){
     Route::resource('role','App\Http\Controllers\RoleController');
@@ -42,27 +54,8 @@ Route::group(['middleware'=>['auth'], 'as' => 'backoffice.'], function (){
         ->name('admin.show');
 });
 
-Route::get('ecomerce','App\Http\Controllers\EcomerceController@index')->name('ecomerce');
-Route::post('ecomerce/mostrar','App\Http\Controllers\EcomerceController@mostrar')->name('ecomerce.mostrar');
-Route::get('ecomerce/{fotografia}/comprar','App\Http\Controllers\EcomerceController@guardarFotografia')->name('ecomerce.comprar');
-Route::get('admin','App\Http\Controllers\AdminController@show')
-    ->name('admin.show');
+Route::get('ecomerce','App\Http\Controllers\EcomerceController@index')->name('ecomerce')->excludedMiddleware(['middleware' => ['auth']]);
+Route::get('suscripcion','App\Http\Controllers\SuscripcionController@index')->name('suscripcion.index')->excludedMiddleware(['middleware' => ['auth']]);
+Route::get('evento/create','App\Http\Controllers\EventoController@create')->name('evento.create')->excludedMiddleware(['middleware' => ['auth']]);
+Route::get('fotografo/create','App\Http\Controllers\FotografoController@create')->name('fotografo.create')->excludedMiddleware(['middleware' => ['auth']]);
 
-Route::get('about','App\Http\Controllers\HomeController@about')->name('about');
-Route::resource('fotografo','App\Http\Controllers\FotografoController');
-Route::resource('plan','App\Http\Controllers\PlanController');
-Route::resource('evento','App\Http\Controllers\EventoController');
-Route::resource('cliente','App\Http\Controllers\ClienteController');
-
-Route::get('evento/{evento}/participantes','App\Http\Controllers\EventoController@participantes')->name('evento.participantes');
-Route::get('evento/{evento}/album','App\Http\Controllers\EventoController@album')->name('evento.album');
-
-Route::post('fotografia/{evento}/store','App\Http\Controllers\FotografiaController@store')->name('fotografia.store');
-
-
-Route::get('suscripcion','App\Http\Controllers\SuscripcionController@index')->name('suscripcion.index');
-Route::post('suscripcion','App\Http\Controllers\SuscripcionController@store')->name('suscripcion.store');
-Route::get('/check-out/{id}', [\App\Http\Controllers\PlanController::class, 'pagos'])
-    ->name('check-out',);
-Route::post('/checkout/{id}',[\App\Http\Controllers\SuscripcionController::class, 'store'])
-    ->name('checkout-input');
