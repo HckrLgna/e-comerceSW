@@ -25,7 +25,7 @@ Auth::routes(['verify'=>true]);
         Route::get('admin','App\Http\Controllers\AdminController@show')
             ->name('admin.show');
 
-        Route::resource('fotografo','App\Http\Controllers\FotografoController');
+        Route::resource('fotografo','App\Http\Controllers\FotografoController',);
         Route::post('fotografia/{evento}/store','App\Http\Controllers\FotografiaController@store')->name('fotografia.store');
         Route::resource('cliente','App\Http\Controllers\ClienteController');
 
@@ -49,7 +49,6 @@ Route::group(['middleware'=>['auth'], 'as' => 'backoffice.'], function (){
     Route::resource('role','App\Http\Controllers\RoleController');
     Route::resource('permission','App\Http\Controllers\PermissionController');
     Route::resource('user','App\Http\Controllers\UserController');
-
     Route::get('admin','App\Http\Controllers\AdminController@show')
         ->name('admin.show');
 });
@@ -57,5 +56,7 @@ Route::group(['middleware'=>['auth'], 'as' => 'backoffice.'], function (){
 Route::get('ecomerce','App\Http\Controllers\EcomerceController@index')->name('ecomerce')->excludedMiddleware(['middleware' => ['auth']]);
 Route::get('suscripcion','App\Http\Controllers\SuscripcionController@index')->name('suscripcion.index')->excludedMiddleware(['middleware' => ['auth']]);
 Route::get('evento/create','App\Http\Controllers\EventoController@create')->name('evento.create')->excludedMiddleware(['middleware' => ['auth']]);
+Route::post('evento','App\Http\Controllers\EventoController@store')->name('evento.store')->excludedMiddleware(['middleware' => ['auth']]);
 Route::get('fotografo/create','App\Http\Controllers\FotografoController@create')->name('fotografo.create')->excludedMiddleware(['middleware' => ['auth']]);
-
+Route::post('fotografo','App\Http\Controllers\FotografoController@store')->name('fotografo.store')->excludedMiddleware(['middleware' => ['auth']]);
+Route::post('cliente/profile/edit/','App\Http\Controllers\ClienteController@subirFotoPerfil')->name('cliente.subir_fotografia');

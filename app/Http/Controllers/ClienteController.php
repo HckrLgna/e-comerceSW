@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Fotografia;
+use Aws\S3\Exception\S3Exception;
+use Aws\S3\S3Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ClienteController extends Controller
 {
@@ -89,6 +92,32 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         //
+    }
+    public function subirFotoPerfil(Request $request){
+        $cliente = auth()->user()->cliente->id;
+        if ($request->hasFile('file')) {
+            try {
+                $s3Client = new S3Client([
+                    'version' => 'latest',
+                    'region'  => 'us-east-1'
+                ]);
+                $result = $s3Client->putObject([
+                    'Bucket' => 'photograpy-bucket-s3',
+                    'Key' => 'imagenes/' . $request->file('file')->getClientOriginalName(),
+                    'Body'   => file_get_contents($request->file('file')->getPathName()),
+                    'ACL'    => 'public-read',
+                ]);
+            } catch ( S3Exception $e ) {
+                return $e->getMessage() . "\n";
+            }
+            //Cargar la url a la bd
+            $cliente = Cliente::find($cliente);
+            $cliente->profile_photo_path= $result->toArray()['ObjectURL'];
+            $cliente->save();
+        }else{
+            return dd($request);
+        }
+        return redirect()->route('cliente.index')->with('info', 'LA IMAGEN SE CARGO A S3');
     }
 
 }
