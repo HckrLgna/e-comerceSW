@@ -36,6 +36,7 @@ Auth::routes(['verify'=>true]);
         Route::get('evento/{evento}/participantes','App\Http\Controllers\EventoController@participantes')->name('evento.participantes');
         Route::get('evento/{evento}/album','App\Http\Controllers\EventoController@album')->name('evento.album');
         Route::get('evento/{evento}/invitacion','App\Http\Controllers\EventoController@indexInvitacion')->name('evento.index.invitacion');
+
         Route::get('registrar/{evento}/usuario','App\Http\Controllers\EventoController@registrarUsuario')->name('registrarusuario');
 
         Route::post('suscripcion','App\Http\Controllers\SuscripcionController@store')->name('suscripcion.store');
