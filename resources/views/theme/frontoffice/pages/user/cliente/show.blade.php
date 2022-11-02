@@ -82,11 +82,7 @@
                                 @foreach($fotografias as $fotografia)
                                 <div class="col mb-2">
                                     <img src="{{$fotografia->path_img}}"
-                                         alt="image 1" class="w-100 rounded-3">
-                                </div>
-                                <div class="col mb-2">
-                                    <img src="{{$fotografia->path_img}}"
-                                         alt="image 1" class="w-100 rounded-3">
+                                         alt="image 1" class=" rounded-3">
                                 </div>
                                 @endforeach
                             </div>

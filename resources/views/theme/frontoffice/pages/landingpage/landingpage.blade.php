@@ -14,7 +14,7 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+                        <img src="{{asset('img/portada2.jpg')}}" alt="100%" width="100%" >
 
                         <div class="container">
                             <div class="carousel-caption text-start">
@@ -25,8 +25,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
-
+                        <img src="{{asset('img/portada1.jpg')}}" alt="100%" width="100%" >
                         <div class="container">
                             <div class="carousel-caption">
                                 <h1>Another example headline.</h1>
@@ -36,7 +35,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+                        <img src="{{asset('img/portada3.jpg')}}" alt="100%" width="100%" >
 
                         <div class="container">
                             <div class="carousel-caption text-end">
@@ -64,7 +63,11 @@
                     @foreach($users as $user)
                         @if($user->fotografo)
                             <div class="col-lg-4">
-                                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                                <div class="text-center">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                                         alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                                         style="width: 150px; z-index: 1; border-radius:100%;">
+                                </div>
                                 <h2 class="fw-normal">{{$user->name}}</h2>
                                 <p>Ciudad de: {{$user->fotografo->ciudad}}</p>
                                 <p><a class="btn btn-secondary" href="{{route('fotografo.show',$user->fotografo)}}">Ver perfil &raquo;</a></p>
@@ -85,9 +88,7 @@
                         <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
                     </div>
                     <div class="col-md-5">
-
                             <img src="{{asset('img/evento1.jpg')}}" alt="" with="350" height="350">
-
                     </div>
                 </div>
 
@@ -99,8 +100,7 @@
                         <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
                     </div>
                     <div class="col-md-5 order-md-1">
-                        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
-
+                        <img src="{{asset('img/evento2.jpg')}}" alt="" with="350" height="350">
                     </div>
                 </div>
 
@@ -121,12 +121,12 @@
                                     <div class="card-body">
                                         <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light">/mo</small></h1>
                                         <ul class="list-unstyled mt-3 mb-4">
-                                            <li>10 users included</li>
-                                            <li>2 GB of storage</li>
-                                            <li>Email support</li>
-                                            <li>Help center access</li>
+                                            <li>2 eventos gratuitos</li>
+                                            <li>520 MB de almacenamiento</li>
+                                            <li>Invitacion por email</li>
+                                            <li>Asistencia tecnica</li>
                                         </ul>
-                                        <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</button>
+                                        <a href="{{route('register')}}"> <button type="button" class="w-100 btn btn-lg btn-outline-primary">Registrate gratis</button></a>
                                     </div>
                                 </div>
                             </div>
@@ -138,12 +138,12 @@
                                     <div class="card-body">
                                         <h1 class="card-title pricing-card-title">$15<small class="text-muted fw-light">/mo</small></h1>
                                         <ul class="list-unstyled mt-3 mb-4">
-                                            <li>20 users included</li>
-                                            <li>10 GB of storage</li>
-                                            <li>Priority email support</li>
-                                            <li>Help center access</li>
+                                            <li>5 eventos</li>
+                                            <li>1 GB de almacenamiento</li>
+                                            <li>Invitacion por email</li>
+                                            <li>Asistencia tecnica</li>
                                         </ul>
-                                        <button type="button" class="w-100 btn btn-lg btn-primary">Get started</button>
+                                        <a href="{{route('suscripcion.index')}}"> <button type="button" class="w-100 btn btn-lg btn-primary">Suscribete</button></a>
                                     </div>
                                 </div>
                             </div>
@@ -155,12 +155,12 @@
                                     <div class="card-body">
                                         <h1 class="card-title pricing-card-title">$29<small class="text-muted fw-light">/mo</small></h1>
                                         <ul class="list-unstyled mt-3 mb-4">
-                                            <li>30 users included</li>
-                                            <li>15 GB of storage</li>
-                                            <li>Phone and email support</li>
-                                            <li>Help center access</li>
+                                            <li>15 eventos gratuitos</li>
+                                            <li>2 GB de almacenamiento</li>
+                                            <li>Invitacion por email</li>
+                                            <li>Asistencia tecnica</li>
                                         </ul>
-                                        <button type="button" class="w-100 btn btn-lg btn-primary">Contact us</button>
+                                        <a href="{{route('suscripcion.index')}}"> <button type="button" class="w-100 btn btn-lg btn-primary">Suscribete</button></a>
                                     </div>
                                 </div>
                             </div>

@@ -22,7 +22,7 @@ class LoginController extends Controller
             $user = Auth::user();
             $rol = $user->roles[0]->name;
             if ($rol == 'Fotografo') {
-                return redirect()->route('fotografo.index');
+                return redirect()->route('fotografo.show');
             }else{
                 if($rol == 'Organizador'){
                     return redirect()->route('evento.participantes',$user->organizador->eventos[0]);

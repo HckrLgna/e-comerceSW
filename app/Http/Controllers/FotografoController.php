@@ -42,33 +42,35 @@ class FotografoController extends Controller
      */
     public function store(Request $request)
     {
+        try {
+            $user = new User();
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
+            $fotografo = new Fotografo();
+            $fotografo->ciudad = $request->input('ciudad');
+            $fotografo->celular = $request->input('celular');
+            if ($request->input('estudio_fotografico')=="Si") {$fotografo->estudio_fotografico = true;}
+            else{
+                $fotografo->estudio_fotografico=false;
+            }
 
-        $user = new User();
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-        $user->save();
-        $fotografo = new Fotografo();
-        $fotografo->ciudad = $request->input('ciudad');
-        $fotografo->celular = $request->input('celular');
-        if ($request->input('estudio_fotografico')=="Si") {$fotografo->estudio_fotografico = true;}
-        else{
-            $fotografo->estudio_fotografico=false;
+            $fotografo->user_id = DB::table('users')->max('id');
+            $fotografo->save();
+            $email = $request->input('email');
+            $pass = $request->input('password');
+            $credentials = array(
+                'email' => $email,
+                'password' => $pass
+            );
+            DB::table('role_user')->insert([
+                'role_id'=>2,
+                'user_id'=>$user->id,
+            ]);
+        }catch (\Exception $exception){
+            return $exception;
         }
-
-        $fotografo->user_id = DB::table('users')->max('id');
-        $fotografo->save();
-        $email = $request->input('email');
-        $pass = $request->input('password');
-        $credentials = array(
-            'email' => $email,
-            'password' => $pass
-        );
-        $auth = Auth::attempt($credentials);
-        DB::table('role_user')->insert([
-            'role_id'=>2,
-            'user_id'=>$user->id,
-        ]);
 
         return view('theme.frontoffice.pages.admin.show');
     }

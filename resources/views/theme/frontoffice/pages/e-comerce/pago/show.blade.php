@@ -9,7 +9,6 @@
             <div class="col col-lg-6 col-md-6">
                 <form action="{{route('suscripcion.store')}}" method="post">
                     @csrf
-                    @method('put')
                     <hr class="my-4">
                     <h4 class="mb-3">Payment</h4>
                     <div class="my-3">
@@ -30,7 +29,7 @@
                     <div class="row gy-3">
                         <div class="col-md-6">
                             <label for="cc-name" class="form-label">Name on card</label>
-                            <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                            <input type="text" class="form-control" id="cc-name" placeholder="" name="nombre" required>
                             <small class="text-muted">Full name as displayed on card</small>
                             <div class="invalid-feedback">
                                 Name on card is required
@@ -39,7 +38,7 @@
 
                         <div class="col-md-6">
                             <label for="cc-number" class="form-label">Credit card number</label>
-                            <input type="text" class="form-control" id="cc-number" placeholder="" required>
+                            <input type="text" class="form-control" id="cc-number" placeholder="" name="card_number" required>
                             <div class="invalid-feedback">
                                 Credit card number is required
                             </div>
@@ -47,7 +46,7 @@
 
                         <div class="col-md-3">
                             <label for="cc-expiration" class="form-label">Expiration</label>
-                            <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                            <input type="text" class="form-control" id="cc-expiration" placeholder="" name="year" required>
                             <div class="invalid-feedback">
                                 Expiration date required
                             </div>
@@ -55,15 +54,13 @@
 
                         <div class="col-md-3">
                             <label for="cc-cvv" class="form-label">CVV</label>
-                            <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                            <input type="text" class="form-control" id="cc-cvv" placeholder="" name="code" required>
                             <div class="invalid-feedback">
                                 Security code required
                             </div>
                         </div>
                     </div>
-
                     <hr class="my-4">
-
                     <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
                 </form>
             </div>

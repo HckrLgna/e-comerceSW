@@ -33,18 +33,23 @@
                     @foreach($fotografias as $fotografia)
                         <div class="col-lg-3">
                             <div class="card" style="margin-bottom: 20px; height: auto;">
-                                <img src="/images/{{ $fotografia->path_img }}"
+                                <img src="{{ $fotografia->path_img }}"
                                          class="card-img-top mx-auto"
-                                         style="height: 150px; width: 150px;display: block;"
+                                         style="height: 250px; width: 250px; display: block;"
                                          alt="{{ $fotografia->path_img }}"
                                     >
-                                <div class="card-body">
-                                        <a href=""><h6 class="card-title">algo</h6></a>
-                                        <p>$precio</p>
-                                </div>
                                 <div class="card-footer" style="background-color: white;">
                                     <div class="row">
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Comprar </button>
+                                        @if(!$fotografia->clientes->find(auth()->user()->cliente))
+                                            @if(auth()->user()->suscripcion && auth()->user()->cliente)
+                                                <form action="{{route('ecomerce.comprar',$fotografia)}}" method="post">
+                                                    @csrf
+                                                    <button class="btn btn-primary" type="submit">Comprar</button>
+                                                </form>
+                                            @endif
+                                        @else
+                                            <button class="btn btn-primary" type="submit" disabled>Comprado</button>
+                                        @endif
                                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">

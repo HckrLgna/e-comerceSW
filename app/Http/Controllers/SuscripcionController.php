@@ -22,30 +22,27 @@ class SuscripcionController extends Controller
         }
 
     }
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
         $suscripcion = new Suscripcion();
-        $suscripcion->nombre_plan = DB::table('planes')->where('plan_id',$id)->value('nombre_plan');
+        $suscripcion->nombre_plan = DB::table('planes')->where('id',1)->value('nombre_plan');
         $suscripcion->fecha_inicio = Carbon::now();
         $p = Carbon::now();
-        $aux = DB::table('planes')->where('plan_id',$id)->value('duracion');
+        $aux = DB::table('planes')->where('id',1)->value('duracion');
         $suscripcion->fecha_final = $p->addDay($aux);
-        $suscripcion->id_user = auth()->user()->id;
-        $suscripcion->id_plan = $id;
+        $suscripcion->user_id = auth()->user()->id;
+        $suscripcion->plan_id = 1;
         $suscripcion->save();
 
         $pago = new Pago();
-        $pago->monto = DB::table('planes')->where('id_Plan',$id)->value('Precio');
+        $pago->monto = DB::table('planes')->where('id',1)->value('precio');
         $pago->owner = $request->input('nombre');
         $pago->card_number = $request->input('card_number');
-        $pago->expiration_month = $_POST['month'];
-        $pago->expiration_year = $_POST['year'];
+        $pago->expiration = $request->input('year');
         $pago->security_code = $request->input('code');
         $pago->user_id = auth()->user()->id;
-        $pago->suscripcion_id = DB::table('suscripciones')->max('id_suscrip');
+        $pago->suscripcion_id = DB::table('suscripciones')->max('id');
         $pago->save();
-
-
         return redirect()->route('home');
     }
 }

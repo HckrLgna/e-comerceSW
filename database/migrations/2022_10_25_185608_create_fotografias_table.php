@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('fotografias', function (Blueprint $table) {
             $table->id();
             $table->string('path_img');
-            $table->boolean('comprado');
+            $table->string('code');
             $table->string('nombre_propietario');
             $table->unsignedBigInteger('evento_id');
             $table->foreign('evento_id')->on('eventos')->references('id')

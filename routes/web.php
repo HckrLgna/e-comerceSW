@@ -13,13 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/','App\Http\Controllers\EcomerceController@index');
+Route::get('/','App\Http\Controllers\HomeController@index')->name('home.');
 
 Route::post('/loggin',[App\Http\Controllers\LoginController::class, 'login'])
     ->name('loggin');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes(['verify'=>true]);
     Route::group(['middleware' => ['auth']],function (){
+        Route::get('ecomerce','App\Http\Controllers\EcomerceController@index')->name('ecomerce');
         Route::post('ecomerce/mostrar','App\Http\Controllers\EcomerceController@mostrar')->name('ecomerce.mostrar');
         Route::post('ecomerce/{fotografia}/comprar','App\Http\Controllers\EcomerceController@guardarFotografia')->name('ecomerce.comprar');
         Route::get('admin','App\Http\Controllers\AdminController@show')
@@ -54,7 +56,6 @@ Route::group(['middleware'=>['auth'], 'as' => 'backoffice.'], function (){
         ->name('admin.show');
 });
 
-Route::get('ecomerce','App\Http\Controllers\EcomerceController@index')->name('ecomerce')->excludedMiddleware(['middleware' => ['auth']]);
 Route::get('suscripcion','App\Http\Controllers\SuscripcionController@index')->name('suscripcion.index')->excludedMiddleware(['middleware' => ['auth']]);
 Route::get('evento/create','App\Http\Controllers\EventoController@create')->name('evento.create')->excludedMiddleware(['middleware' => ['auth']]);
 Route::post('evento','App\Http\Controllers\EventoController@store')->name('evento.store')->excludedMiddleware(['middleware' => ['auth']]);

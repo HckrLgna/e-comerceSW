@@ -7,9 +7,12 @@ use App\Models\Evento;
 use App\Models\Fotografo;
 use App\Models\Organizador;
 use App\Models\User;
+use Aws\Rekognition\Exception\RekognitionException;
+use Aws\Rekognition\RekognitionClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Whoops\Exception\ErrorException;
 
 class EventoController extends Controller
 {
@@ -47,6 +50,7 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
+        try {
         $user = new User();
         $user->name = $request->input('name');
         $user->email = $request->input('email');
@@ -72,6 +76,22 @@ class EventoController extends Controller
         $evento->fotografo_id = $request->input('id_fotografo');
         $evento->organizador_id = $organizador->id;
         $evento->save();
+            try {
+                $rekoClient = new RekognitionClient([
+                    'version' => 'latest',
+                    'region'  => 'us-east-1'
+                ]);
+                $results = $rekoClient->createCollection([
+                    'CollectionId' => 'evento'.$evento->id,
+                ]);
+
+            } catch (RekognitionException $e) {
+                return $e->getAwsErrorCode() /* . "\n" */;
+            }
+        } catch ( ErrorException $e) {
+            return $e;
+        }
+
         return redirect()->route('evento.participantes',$evento);
     }
 

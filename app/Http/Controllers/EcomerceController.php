@@ -18,10 +18,15 @@ class EcomerceController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $eventos = $user->cliente->eventos;
+        $fotografias=[];
+        foreach($eventos as $evento){
+             $fotografias = Fotografia::all()->find($evento);
+        }
         if (auth()->user() && auth()->user()->cliente){
             return view('theme.frontoffice.pages.e-comerce.show',[
-                'fotografias' => Fotografia::all(),
-                'eventos'=>$user->cliente->eventos
+                'fotografias' => $fotografias,
+                'eventos'=> $eventos
             ]);
         }else{
             return view('theme.frontoffice.pages.e-comerce.show',[
@@ -106,6 +111,8 @@ class EcomerceController extends Controller
                 'cliente_id'=> auth()->user()->cliente->id,
                 'fotografia_id'=>$fotografia->id,
             ]);
+            $fotografia->code = true;
+            $fotografia->save();
             return redirect()->route('cliente.index');
         }else{
             return redirect()->route('loggin');

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Fotografia extends Model
 {
     use HasFactory;
-    protected $fillable = ['path_img','comprado','nombre_propietario'];
+    protected $fillable = ['path_img','code','nombre_propietario'];
     //relaciones
     public function evento(){
         return $this->belongsTo(Evento::class);
