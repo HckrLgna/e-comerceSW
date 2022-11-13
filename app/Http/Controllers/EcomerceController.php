@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Evento;
 use App\Models\Fotografia;
 use App\Models\Product;
+use Aws\Rekognition\Exception\RekognitionException;
+use Aws\Rekognition\RekognitionClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function Sodium\add;
 
 class EcomerceController extends Controller
 {
@@ -18,21 +21,32 @@ class EcomerceController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $eventos = $user->cliente->eventos;
-        $fotografias=[];
-        foreach($eventos as $evento){
-             $fotografias = Fotografia::all()->find($evento);
-        }
-        if (auth()->user() && auth()->user()->cliente){
-            return view('theme.frontoffice.pages.e-comerce.show',[
-                'fotografias' => $fotografias,
-                'eventos'=> $eventos
-            ]);
+        if ($user->cliente){
+            if($user->cliente->eventos){
+                $eventos = $user->cliente->eventos;
+                $fotografias=[];
+                foreach($eventos as $evento){
+                    $fotografias = $evento->fotografias;
+                }
+                return view('theme.frontoffice.pages.e-comerce.show',[
+                    'fotografias' => $fotografias,
+                    'eventos'=> $eventos
+                ]);
+            }else{
+                //si fotografo no tiene eventos
+            }
         }else{
-            return view('theme.frontoffice.pages.e-comerce.show',[
-                'fotografias' => Fotografia::all(),
-                'eventos'=>Evento::all()
-            ]);
+            if ($user->fotografo){
+                return view('theme.frontoffice.pages.e-comerce.show',[
+                    'fotografias' => Fotografia::all(),
+                    'eventos'=>$user->fotografo->eventos,
+                ]);
+            }elseif ($user->organizador){
+                return view('theme.frontoffice.pages.e-comerce.show',[
+                    'fotografias' => Fotografia::all(),
+                    'eventos'=>$user->organizador->eventos
+                ]);
+            }
         }
     }
 
@@ -117,5 +131,42 @@ class EcomerceController extends Controller
         }else{
             return redirect()->route('loggin');
         }
+    }
+    public function filtrarReconocimiento(Request $request){
+        $user = auth()->user();
+        $coleccionId = 'collection'.$request->input('evento_id');
+        $cliente = $user->cliente;
+        $evento =Evento::find($request->input('evento_id'));
+        $fotosEvento = $evento->fotografias;
+        $resultado = array();
+        $id_image_list = array();
+        try {
+            $rekoClient = new RekognitionClient([
+                'version' => 'latest',
+                'region'  => 'us-east-1'
+            ]);
+            $results = $rekoClient->searchFacesByImage([
+                'CollectionId' => $coleccionId,
+                'FaceMatchThreshold' => 95,
+                'Image' => [ 'Bytes' => file_get_contents($request->file('path_image')->getPathname()) ],
+                //'MaxFaces' => 5,
+            ]);
+        } catch (RekognitionException $e) {
+            return $e->getMessage() . "\n";
+        }
+
+        $faceMatches = $results->toArray()['FaceMatches'];
+        foreach ($faceMatches as $faceMatch){
+            array_push( $id_image_list, $faceMatch['Face']['ImageId']);
+        }
+        foreach ($fotosEvento as $fotografia){
+            if ( in_array($fotografia->code,$id_image_list) ){
+                array_push( $resultado , $fotografia);
+            }
+        }
+        return view('theme.frontoffice.pages.e-comerce.show',[
+            'fotografias' => $resultado,
+            'eventos'=>$user->cliente->eventos
+        ]);
     }
 }

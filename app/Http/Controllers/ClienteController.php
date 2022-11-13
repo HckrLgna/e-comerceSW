@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Fotografia;
+use Aws\Rekognition\Exception\RekognitionException;
+use Aws\Rekognition\RekognitionClient;
 use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Illuminate\Http\Request;
@@ -94,8 +96,9 @@ class ClienteController extends Controller
         //
     }
     public function subirFotoPerfil(Request $request){
-        $cliente = auth()->user()->cliente->id;
+        $cliente = auth()->user()->cliente;
         if ($request->hasFile('file')) {
+            $path = 'profiles/' . $request->file('file')->getClientOriginalName();
             try {
                 $s3Client = new S3Client([
                     'version' => 'latest',
@@ -103,19 +106,54 @@ class ClienteController extends Controller
                 ]);
                 $result = $s3Client->putObject([
                     'Bucket' => 'photograpy-bucket-s3',
-                    'Key' => 'imagenes/' . $request->file('file')->getClientOriginalName(),
+                    'Key' => $path,
                     'Body'   => file_get_contents($request->file('file')->getPathName()),
                     'ACL'    => 'public-read',
                 ]);
-            } catch ( S3Exception $e ) {
-                return $e->getMessage() . "\n";
+                //Cargar la url a la bd
+
+                $rekoClient = new RekognitionClient([
+                    'version' => 'latest',
+                    'region'  => 'us-east-1'
+                ]);
+
+                    $coleccionId = 'collectionProfile'.$cliente->id;
+                    $colecciones = $rekoClient->listCollections(['CollectionId']);
+                    $listaColleciones = $colecciones->toArray()['CollectionIds'];
+                    foreach ($listaColleciones as $collecion){
+                        if ($collecion == $coleccionId){
+                            $results = $rekoClient->deleteCollection([
+                                'CollectionId' => $coleccionId,
+                            ]);
+                        }
+                    }
+                    $results = $rekoClient->createCollection([
+                        'CollectionId' =>$coleccionId ,
+                    ]);
+
+                $resultsRec = $rekoClient->indexFaces([
+                    'CollectionId' => $coleccionId,
+                    'Image' => [
+                        'S3Object' => [
+                            'Bucket' => 'photograpy-bucket-s3',
+                            'Name' => $path,
+                        ]
+                    ],
+                ]);
+
+                if (count($resultsRec->toArray()['FaceRecords'])){
+                    $imageID = $resultsRec->toArray()['FaceRecords'][0]['Face']['ImageId'];
+                }
+                $clienten = Cliente::all()->find($cliente);
+                $clienten->profile_photo_path= $result->toArray()['ObjectURL'];
+                $clienten->code = $imageID;
+                $clienten->save();
+
+            }catch (\Exception $exception){
+                return $exception;
             }
-            //Cargar la url a la bd
-            $cliente = Cliente::find($cliente);
-            $cliente->profile_photo_path= $result->toArray()['ObjectURL'];
-            $cliente->save();
         }else{
-            return dd($request);
+            return redirect()->refresh()->with('info','No se logro');
         }
         return redirect()->route('cliente.index')->with('info', 'LA IMAGEN SE CARGO A S3');
     }

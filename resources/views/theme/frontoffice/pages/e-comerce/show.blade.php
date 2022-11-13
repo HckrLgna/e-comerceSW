@@ -1,5 +1,17 @@
 @extends('theme.frontoffice.layouts.admin')
-
+@section('head')
+    <style>
+        .transp-block {
+            background: rgba(174, 168, 171, 0.8) url(https://images.vexels.com/media/users/3/167553/isolated/lists/c05cddc47f3ff6cb73a8310e6c8a4f6b-cada-foto-tiene-un-trazo-de-insignia-de-corazon-de-objetivo-de-lente-de-camara-de-historia.png) no-repeat;
+            width: 250px;
+            height: 250px;
+        }
+        img.transparent {
+            filter:alpha(opacity=75);
+            opacity:.50;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="container-fluid" >
         <div class="row p-5 justify-content-center">
@@ -11,19 +23,20 @@
                         @if(auth()->user())
                             @if(auth()->user()->cliente)
                                 <div class="col-lg-6">
-                                    <form action=" {{ route('ecomerce.mostrar')}}" method="post" >
+                                    <form action=" {{route('ecomerce.filtrar')}}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <select class="form-select" aria-label="Default select example" name="evento_id">
                                             <option selected>Selecciona el evento</option>
                                             @foreach($eventos as $evento)
-                                                <option value="{{$evento->id}}" href="{{route('home')}}">{{$evento->nombre}}</option>
+                                                <a href="{{ route('ecomerce.mostrar',$evento)}}"> <option value="{{$evento->id}}">{{$evento->nombre}}</option> </a>
                                             @endforeach
                                         </select>
-                                        <button type="submit" class="btn btn-outline-primary">Filtrar por evento</button>
+                                        <div class="input-group">
+                                            <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Cargar foto" name="path_image">
+                                            <button type="submit" class="btn btn-outline-secondary" id="inputGroupFileAddon04" >Filtrar mis fotos</button>
+                                        </div>
+
                                     </form>
-                                </div>
-                                <div class="col-lg-2">
-                                    <button type="button" class="btn btn-outline-primary">Filtrar mis fotos</button>
                                 </div>
                             @endif
                         @endif
@@ -32,23 +45,36 @@
                 <div class="row">
                     @foreach($fotografias as $fotografia)
                         <div class="col-lg-3">
-                            <div class="card" style="margin-bottom: 20px; height: auto;">
-                                <img src="{{ $fotografia->path_img }}"
-                                         class="card-img-top mx-auto"
-                                         style="height: 250px; width: 250px; display: block;"
-                                         alt="{{ $fotografia->path_img }}"
-                                    >
+                            <div class="card " style="margin-bottom: 20px; height: auto;">
+                                @if(!$fotografia->clientes->find(auth()->user()->cliente))
+                                    <div class="container-fluid transp-block mt-4 mb-4">
+                                        <img src="{{ $fotografia->path_img }}"
+                                             class="card-img-top mx-auto  transparent"
+                                             style="height: 200px; width: 200px; display: block;"
+                                             alt="{{ $fotografia->path_img }}"
+                                        >
+                                    </div>
+                                @else
+                                    <div class="container-fluid mt-4 mb-4">
+                                        <img src="{{ $fotografia->path_img }}"
+                                             class="card-img-top mx-auto "
+                                             style="height: 200px; width: 200px; display: block;"
+                                             alt="{{ $fotografia->path_img }}"
+                                        >
+                                    </div>
+                                @endif
+
                                 <div class="card-footer" style="background-color: white;">
                                     <div class="row">
                                         @if(!$fotografia->clientes->find(auth()->user()->cliente))
-                                            @if(auth()->user()->suscripcion && auth()->user()->cliente)
+                                            @if(auth()->user()->cliente)
                                                 <form action="{{route('ecomerce.comprar',$fotografia)}}" method="post">
                                                     @csrf
                                                     <button class="btn btn-primary" type="submit">Comprar</button>
                                                 </form>
                                             @endif
                                         @else
-                                            <button class="btn btn-primary" type="submit" disabled>Comprado</button>
+                                            <button class="btn btn-primary bg-gradient" type="submit" disabled>Comprado</button>
                                         @endif
                                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">

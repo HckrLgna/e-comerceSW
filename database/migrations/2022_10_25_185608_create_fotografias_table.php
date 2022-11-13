@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('path_img');
             $table->string('code');
             $table->string('nombre_propietario');
+            $table->text('descripcion');
             $table->unsignedBigInteger('evento_id');
             $table->foreign('evento_id')->on('eventos')->references('id')
                 ->onDelete('cascade');

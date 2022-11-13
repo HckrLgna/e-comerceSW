@@ -20,37 +20,32 @@ class FotografiaController extends Controller
         $user = auth()->user();
         if ($request->hasFile('file')) {
             try {
-                try {
+                    $path = 'folderevento'.$evento->id.'/'. $request->file('file')->getClientOriginalName();
+
                     $s3Client = new S3Client([
                         'version' => 'latest',
                         'region'  => 'us-east-1'
                     ]);
                     $result = $s3Client->putObject([
                         'Bucket' => 'photograpy-bucket-s3',
-                        'Key' => 'eventos/'.$evento->id.'/'. $request->file('file')->getClientOriginalName(),
+                        'Key' => $path,
                         'Body'   => file_get_contents($request->file('file')->getPathName()),
                         'ACL'    => 'public-read',
                     ]);
-                } catch ( S3Exception $e ) {
-                    return $e->getMessage() . "\n";
-                }
-                try {
+
                     $rekoClient = new RekognitionClient([
                         'version' => 'latest',
                         'region'  => 'us-east-1'
                     ]);
                     $resultsRec = $rekoClient->indexFaces([
-                        'CollectionId' => 'evento'.$evento->id,
+                        'CollectionId' => 'collection'.$evento->id,
                         'Image' => [
                             'S3Object' => [
                                 'Bucket' => 'photograpy-bucket-s3',
-                                'Name' => $result->toArray()['ObjectURL'],
+                                'Name' => $path,
                             ]
                         ],
                     ]);
-                } catch (RekognitionException $e) {
-                    return $e->getMessage() . "\n";
-                }
                 try {
                     if (count($resultsRec->toArray()['FaceRecords'])){
                         $imageID = $resultsRec->toArray()['FaceRecords'][0]['Face']['ImageId'];
@@ -59,6 +54,7 @@ class FotografiaController extends Controller
                     $fotografia->path_img = $result->toArray()['ObjectURL'];
                     $fotografia->code = $imageID;
                     $fotografia->nombre_propietario = "unknown";
+                    $fotografia->descripcion=$request->input('descripcion');
                     $fotografia->evento_id = $evento->id;
                     $fotografia->save();
                 }catch (ErrorException $e){
@@ -67,7 +63,6 @@ class FotografiaController extends Controller
             }catch (\Exception $exception){
                 return $exception;
             }
-
         }else{
             return redirect()->refresh();
         }

@@ -1,11 +1,71 @@
 @extends('theme.frontoffice.layouts.admin')
 @section('title','pagina demo frontoffice')
 @section('head')
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <style>
+        .boddy {
+            background-color:#1d1d1d !important;
+            font-family: "Asap", sans-serif;
+            color:#989898;
+            margin:10px;
+            font-size:16px;
+        }
+
+        #demo {
+            height:100%;
+            position:relative;
+            overflow:hidden;
+        }
+
+
+        .green{
+            background-color:#6fb936;
+        }
+        .thumb{
+            margin-bottom: 30px;
+        }
+
+        .page-top{
+            margin-top:85px;
+        }
+
+
+        img.zoom {
+            width: 100%;
+            height: 200px;
+            border-radius:5px;
+            object-fit:cover;
+            -webkit-transition: all .3s ease-in-out;
+            -moz-transition: all .3s ease-in-out;
+            -o-transition: all .3s ease-in-out;
+            -ms-transition: all .3s ease-in-out;
+        }
+
+
+        .transition {
+            -webkit-transform: scale(1.2);
+            -moz-transform: scale(1.2);
+            -o-transform: scale(1.2);
+            transform: scale(1.2);
+        }
+        .modal-header {
+
+            border-bottom: none;
+        }
+        .modal-title {
+            color:#000;
+        }
+        .modal-footer{
+            display:none;
+        }
+
+    </style>
 @endsection
 
 @section('content')
     <section class=" gradient-custom-2">
-        <div class="container">
+        <div class="container page-top">
             <div class="row d-flex justify-content-center align-items-center ">
                 <div class="col p-5">
                     <div class="card">
@@ -78,14 +138,20 @@
                                 <p class="lead fw-normal mb-0">Album de fotos</p>
                                 <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
                             </div>
-                            <div class="row g-2">
-                                @foreach($fotografias as $fotografia)
-                                <div class="col mb-2">
-                                    <img src="{{$fotografia->path_img}}"
-                                         alt="image 1" class=" rounded-3">
+                            <div class="container p-5 boddy">
+                                <div class="row">
+                                    @foreach($fotografias as $fotografia)
+                                        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                            <a href="#" class="fancybox" rel="ligthbox">
+                                                <img src="{{$fotografia->path_img}}"
+                                                     alt="image" class="zoom img-fluid">
+                                            </a>
+                                        </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -95,4 +161,25 @@
 @endsection
 
 @section('foot')
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function(){
+
+                $(this).addClass('transition');
+            }, function(){
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
 @endsection

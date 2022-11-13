@@ -51,43 +51,48 @@ class EventoController extends Controller
     public function store(Request $request)
     {
         try {
-        $user = new User();
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-        $user->save();
+            $user = new User();
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
 
-        $organizador = new Organizador();
-        $organizador->name = $request->input('name');
-        $organizador->last_name = $request->input('last_name');
-        $organizador->address = $request->input('address');
-        $organizador->user_id = $user->id;
-        $organizador->save();
+            $organizador = new Organizador();
+            $organizador->name = $request->input('name');
+            $organizador->last_name = $request->input('last_name');
+            $organizador->address = $request->input('address');
+            $organizador->user_id = $user->id;
+            $organizador->save();
 
-        DB::table('role_user')->insert([
-            'role_id'=>3,
-            'user_id'=>$user->id,
-        ]);
+            DB::table('role_user')->insert([
+                'role_id'=>3,
+                'user_id'=>$user->id,
+            ]);
 
-        $evento = new Evento();
-        $evento->nombre = $request->input('nombre');
-        $evento->fecha = $request->input('fecha');
-        $evento->lugar = $request->input('event_address');
-        $evento->fotografo_id = $request->input('id_fotografo');
-        $evento->organizador_id = $organizador->id;
-        $evento->save();
-            try {
+            $evento = new Evento();
+            $evento->nombre = $request->input('nombre');
+            $evento->fecha = $request->input('fecha');
+            $evento->lugar = $request->input('event_address');
+            $evento->fotografo_id = $request->input('id_fotografo');
+            $evento->organizador_id = $organizador->id;
+            $evento->save();
                 $rekoClient = new RekognitionClient([
                     'version' => 'latest',
                     'region'  => 'us-east-1'
                 ]);
+                $coleccionId = 'collection'.$evento->id;
+                $colecciones = $rekoClient->listCollections(['CollectionId']);
+                $listaColleciones = $colecciones->toArray()['CollectionIds'];
+                foreach ($listaColleciones as $collecion){
+                    if ($collecion == $coleccionId){
+                        $results = $rekoClient->deleteCollection([
+                            'CollectionId' => $coleccionId,
+                        ]);
+                    }
+                }
                 $results = $rekoClient->createCollection([
-                    'CollectionId' => 'evento'.$evento->id,
+                    'CollectionId' =>$coleccionId ,
                 ]);
-
-            } catch (RekognitionException $e) {
-                return $e->getAwsErrorCode() /* . "\n" */;
-            }
         } catch ( ErrorException $e) {
             return $e;
         }

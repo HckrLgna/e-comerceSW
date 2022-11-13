@@ -22,7 +22,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes(['verify'=>true]);
     Route::group(['middleware' => ['auth']],function (){
         Route::get('ecomerce','App\Http\Controllers\EcomerceController@index')->name('ecomerce');
-        Route::post('ecomerce/mostrar','App\Http\Controllers\EcomerceController@mostrar')->name('ecomerce.mostrar');
+        Route::get('ecomerce/mostrar/{evento}','App\Http\Controllers\EcomerceController@mostrar')->name('ecomerce.mostrar');
         Route::post('ecomerce/{fotografia}/comprar','App\Http\Controllers\EcomerceController@guardarFotografia')->name('ecomerce.comprar');
         Route::get('admin','App\Http\Controllers\AdminController@show')
             ->name('admin.show');
@@ -62,3 +62,4 @@ Route::post('evento','App\Http\Controllers\EventoController@store')->name('event
 Route::get('fotografo/create','App\Http\Controllers\FotografoController@create')->name('fotografo.create')->excludedMiddleware(['middleware' => ['auth']]);
 Route::post('fotografo','App\Http\Controllers\FotografoController@store')->name('fotografo.store')->excludedMiddleware(['middleware' => ['auth']]);
 Route::post('cliente/profile/edit/','App\Http\Controllers\ClienteController@subirFotoPerfil')->name('cliente.subir_fotografia');
+Route::post('ecomerce/filtrar','App\Http\Controllers\EcomerceController@filtrarReconocimiento')->name('ecomerce.filtrar');
