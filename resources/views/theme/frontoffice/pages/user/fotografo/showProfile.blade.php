@@ -20,23 +20,23 @@
                                 </button>
                             </div>
                             <div class="ms-3" style="margin-top: 130px;">
-                                <h5>Andy Horwitz</h5>
-                                <p>New York</p>
+                                <h5>{{$fotografo->user->name}}</h5>
+                                <p>{{$fotografo->ciudad}}</p>
                             </div>
                         </div>
                         <div class="p-4 text-black" style="background-color: #f8f9fa;">
                             <div class="d-flex justify-content-end text-center py-1">
                                 <div>
                                     <p class="mb-1 h5">253</p>
-                                    <p class="small text-muted mb-0">Photos</p>
+                                    <p class="small text-muted mb-0">Fotografias</p>
                                 </div>
                                 <div class="px-3">
-                                    <p class="mb-1 h5">1026</p>
-                                    <p class="small text-muted mb-0">Followers</p>
+                                    <p class="mb-1 h5">{{count($eventos)}}</p>
+                                    <p class="small text-muted mb-0">Eventos asistidos</p>
                                 </div>
                                 <div>
                                     <p class="mb-1 h5">478</p>
-                                    <p class="small text-muted mb-0">Following</p>
+                                    <p class="small text-muted mb-0">Reconocimientos</p>
                                 </div>
                             </div>
                         </div>
@@ -44,14 +44,10 @@
                             <div class="mb-5">
                                 <p class="lead fw-normal mb-1">About</p>
                                 <div class="p-4" style="background-color: #f8f9fa;">
-                                    <p class="font-italic mb-1">Web Developer</p>
-                                    <p class="font-italic mb-1">Lives in New York</p>
-                                    <p class="font-italic mb-0">Photographer</p>
+                                    <p class="font-italic mb-1">Diseñador Web</p>
+                                    <p class="font-italic mb-1">Vive en La Paz</p>
+                                    <p class="font-italic mb-0">Fotografo</p>
                                 </div>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <p class="lead fw-normal mb-0">Recent photos</p>
-                                <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
                             </div>
                             <div class="row g-2">
                                 <div class="col mb-2">

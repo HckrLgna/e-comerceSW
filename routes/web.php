@@ -28,6 +28,7 @@ Auth::routes(['verify'=>true]);
             ->name('admin.show');
 
         Route::resource('fotografo','App\Http\Controllers\FotografoController',);
+        Route::get('fotografo/{fotografo}/profile','App\Http\Controllers\FotografoController@showProfile')->name('fotografo.showProfile');
         Route::post('fotografia/{evento}/store','App\Http\Controllers\FotografiaController@store')->name('fotografia.store');
         Route::resource('cliente','App\Http\Controllers\ClienteController');
 

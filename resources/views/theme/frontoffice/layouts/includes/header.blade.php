@@ -30,12 +30,17 @@
                         @else
                         <a href="{{route('cliente.index')}}"> <button type="button" class="btn btn-outline-light me-2">Perfil</button></a>
                     @endif
-                    <form method="POST" action="{{route ('logout')}}">
-                        @csrf
-                        <button type="submit" class="btn btn-warning">logout </button>
-                    </form>
+                        <a href="#" onclick="enviar_formulario()"> <button type="button" class="btn btn-warning">Salir </button></a>
+                        <form method="POST" action="{{route ('logout')}}" name="delete_form">
+                            @csrf
+                        </form>
                 @endif
             </div>
         </div>
     </div>
 </header>
+<script>
+    function enviar_formulario() {
+        document.delete_form.submit();
+    }
+</script>

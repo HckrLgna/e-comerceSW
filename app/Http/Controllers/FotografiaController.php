@@ -21,7 +21,6 @@ class FotografiaController extends Controller
         if ($request->hasFile('file')) {
             try {
                     $path = 'folderevento'.$evento->id.'/'. $request->file('file')->getClientOriginalName();
-
                     $s3Client = new S3Client([
                         'version' => 'latest',
                         'region'  => 'us-east-1'

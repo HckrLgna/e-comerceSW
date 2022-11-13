@@ -70,7 +70,7 @@
                                 </div>
                                 <h2 class="fw-normal">{{$user->name}}</h2>
                                 <p>Ciudad de: {{$user->fotografo->ciudad}}</p>
-                                <p><a class="btn btn-secondary" href="{{route('fotografo.show',$user->fotografo)}}">Ver perfil &raquo;</a></p>
+                                <p><a class="btn btn-secondary" href="{{route('fotografo.showProfile',$user->fotografo)}}">Ver perfil &raquo;</a></p>
                             </div><!-- /.col-lg-4 -->
                         @endif
 

@@ -123,4 +123,12 @@ class FotografoController extends Controller
     {
         //
     }
+    public function showProfile(Fotografo $fotografo)
+    {
+        return view('theme.frontoffice.pages.user.fotografo.showProfile',[
+            'fotografo'=>$fotografo,
+            'eventos' => $fotografo->eventos,
+
+        ]);
+    }
 }
