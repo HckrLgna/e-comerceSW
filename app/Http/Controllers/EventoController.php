@@ -24,7 +24,7 @@ class EventoController extends Controller
     public function index()
     {
         $evento = auth()->user()->organizador->eventos[0];
-        $qr_svg = QrCode::generate('http://184.73.143.187/registrar/'.$evento->id.'/usuario', '../public/qrcodes/evento'.$evento->id.'.svg');
+        $qr_svg = QrCode::generate('http://44.203.139.176/registrar/'.$evento->id.'/usuario', '../public/qrcodes/evento'.$evento->id.'.svg');
         return view('theme.frontoffice.pages.evento.index',[
             'evento' => $evento
         ]);
