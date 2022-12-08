@@ -47,7 +47,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Subir Fotografia</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
@@ -80,7 +80,7 @@
                                             <img src="{{$fotografia->path_img}}" alt="" height="225" width="100%">
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                            <p class="card-text">{{$fotografia->descripcion}}</p>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-sm btn-outline-secondary">View</button>

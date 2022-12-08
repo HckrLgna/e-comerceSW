@@ -18,7 +18,7 @@
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-lg-4">
-                            <h4>Products In Our Store</h4>
+                            <h4>Ecomerce Digital</h4>
                         </div>
                         @if(auth()->user())
                             @if(auth()->user()->cliente)
